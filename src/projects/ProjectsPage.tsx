@@ -1,35 +1,36 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ProjectList from './ProjectList';
-import { Project } from './Project'
-import { projectAPI } from './projectAPI';
-import { AppState } from '../state';
-import { useSelector, useDispatch } from 'react-redux';
-import { loadProjects } from './state/projectActions';
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { ProjectState } from './state/projectTypes';
+import { useProjects } from './projectHooks';
+// import { Project } from './Project'
+// import { projectAPI } from './projectAPI';
+// import { AppState } from '../state';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { loadProjects } from './state/projectActions';
+// import { AnyAction } from 'redux';
+// import { ThunkDispatch } from 'redux-thunk';
+// import { ProjectState } from './state/projectTypes';
 
 function ProjectsPage() {
     // const [projects, setProjects] = useState<Project[]>([]);
     // const [loading, setLoading] = useState(false);
     // const [error, setError] = useState<string | undefined>(undefined);
     // const [currentPage, setCurrentPage] = useState(1);
-    const loading = useSelector(
-        (appState: AppState) => appState.projectState.loading
-    );
-    const projects = useSelector(
-        (appState: AppState) => appState.projectState.projects
-    );
-    const error = useSelector(
-        (appState: AppState) => appState.projectState.error
-    );
-    const currentPage = useSelector(
-        (appState: AppState) => appState.projectState.page
-    );
-    const dispatch = useDispatch<ThunkDispatch<ProjectState, any, AnyAction>>();
-    useEffect(() => {
-        dispatch(loadProjects(1));
-    }, [dispatch]);
+    // const loading = useSelector(
+    //     (appState: AppState) => appState.projectState.loading
+    // );
+    // const projects = useSelector(
+    //     (appState: AppState) => appState.projectState.projects
+    // );
+    // const error = useSelector(
+    //     (appState: AppState) => appState.projectState.error
+    // );
+    // const currentPage = useSelector(
+    //     (appState: AppState) => appState.projectState.page
+    // );
+    // const dispatch = useDispatch<ThunkDispatch<ProjectState, any, AnyAction>>();
+    // useEffect(() => {
+    //     dispatch(loadProjects(1));
+    // }, [dispatch]);
     // useEffect(() => {
     //     setLoading(true);
     //     projectAPI
@@ -64,17 +65,30 @@ function ProjectsPage() {
     // };
     const handleMoreClick = () => {
         // setCurrentPage((currentPage) => currentPage + 1);
-        dispatch(loadProjects(currentPage + 1));
+        // dispatch(loadProjects(currentPage + 1));
+        setCurrentPage((currentPage) => currentPage + 1);
     };
+    const {
+        projects,
+        loading,
+        error,
+        setCurrentPage,
+        saveProject,
+        saving,
+        savingError,
+    } = useProjects();
     return <>
         <h1>Projects</h1>
-        {error && (
+        {saving && <span className="toast">Saving...</span>}
+        {/* {error && ( */}
+        {(error || savingError) && (
             <div className="row">
                 <div className="card large error">
                     <section>
                         <p>
                             <span className="icon-alert inverse "></span>
-                            {error}
+                            {/* {error} */}
+                            {error} {savingError}
                         </p>
                     </section>
                 </div>

@@ -1,3 +1,17 @@
+html,
+body,
+#root,
+.container,
+.center-page {
+  height: 100%;
+}
+
 form {
   min-width: 300px;
+}
+
+.center-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

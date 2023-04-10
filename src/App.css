@@ -1,0 +1,7 @@
+header {
+  height: unset !important;
+}
+
+a.button.active {
+  border: 1px solid var(--fore-color);
+}
